@@ -1019,10 +1019,10 @@ function CrossoverInner({ widget }: CrossoverInnerProps) {
                       marginLeft: 24,
                     }}
                   >
-                    <Trans>
-                      Using calculated historical return of{' '}
-                      {(historicalReturn * 100).toFixed(1)}%
-                    </Trans>
+                    <Trans
+                      defaults="Using calculated historical return of {{rate}}%"
+                      values={{ rate: (historicalReturn * 100).toFixed(1) }}
+                    />
                   </div>
                 )}
               </View>

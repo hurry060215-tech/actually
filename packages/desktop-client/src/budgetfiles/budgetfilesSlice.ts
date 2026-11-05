@@ -15,6 +15,8 @@ import { createAppAsyncThunk } from '#redux';
 import { signOut } from '#users/usersSlice';
 import { getDownloadError, getSyncError, getUnsafeZipError } from '#util/error';
 
+import { localizeNewBudget } from './localizeNewBudget';
+
 const sliceName = 'budgetfiles';
 
 export const loadBudgets = createAppAsyncThunk(
@@ -158,7 +160,13 @@ export const createBudget = createAppAsyncThunk(
     if (demoMode) {
       await send('create-demo-budget');
     } else {
-      await send('create-budget', { testMode });
+      const budgetName = testMode
+        ? undefined
+        : await send('unique-budget-name', { name: t('My Finances') });
+      const result = await send('create-budget', { testMode, budgetName });
+      if (!testMode && !result.error) {
+        await localizeNewBudget();
+      }
     }
 
     dispatch(closeModal());

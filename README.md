@@ -1,3 +1,5 @@
+> **Actual 简体中文版**：基于官方 v26.11.0，仅完善中文体验，保留原有功能和数据格式。请阅读 [中文说明、Windows 使用与构建方法](README.zh-CN.md)。本项目不是官方发行版。
+
 <p align="center">
   <img src="/demo.png" alt="Actualbudget" />
 </p>

@@ -802,6 +802,7 @@ function CalendarWithHeader({
   format,
 }: CalendarWithHeaderProps) {
   const { t } = useTranslation();
+  const locale = useLocale();
 
   return (
     <View
@@ -857,7 +858,7 @@ function CalendarWithHeader({
             });
           }}
         >
-          {formatDate(calendar.start, 'MMMM yyyy')}
+          {formatDate(calendar.start, 'MMMM yyyy', { locale })}
         </Button>
         <View
           style={{ display: 'grid', gridTemplateColumns: '16px 1fr', gap: 2 }}

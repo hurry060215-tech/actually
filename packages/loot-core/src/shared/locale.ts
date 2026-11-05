@@ -6,6 +6,12 @@ const locales: Record<string, localesNamespace.Locale> = {
 };
 
 export function getLocale(language: string) {
+  if (/^zh(?:-(?:cn|sg|hans)(?:-.*)?)?$/i.test(language)) {
+    return locales.zhCN;
+  }
+  if (/^zh-(?:tw|hk|mo|hant)(?:-.*)?$/i.test(language)) {
+    return locales.zhTW;
+  }
   if (!language || typeof language !== 'string') {
     return locales.enUS;
   }

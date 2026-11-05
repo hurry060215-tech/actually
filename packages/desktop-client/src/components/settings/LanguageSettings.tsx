@@ -15,6 +15,7 @@ import { SettingsRow } from './SettingsRow';
 
 const languageDisplayNameOverride: { [key: string]: string } = {
   'pt-BR': 'Português (Brasil)',
+  'zh-Hans': '简体中文',
 };
 
 const languageOptions = (t: TFunction): SelectOption[] =>
@@ -79,7 +80,7 @@ export function LanguageSettings() {
           <Select
             aria-label={t('Select language')}
             options={languageOptions(t)}
-            value={isEnabled ? (language ?? '') : 'not-available'}
+            value={isEnabled ? (language ?? 'zh-Hans') : 'not-available'}
             defaultLabel={
               isEnabled ? t('Select language') : t('No languages available')
             }

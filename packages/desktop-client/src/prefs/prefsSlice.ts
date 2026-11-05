@@ -71,7 +71,7 @@ export const loadPrefs = createAppAsyncThunk(
     );
 
     // We need to load translations before the app renders
-    setI18NextLanguage(globalPrefs.language ?? '');
+    setI18NextLanguage(globalPrefs.language ?? null);
 
     return prefs;
   },

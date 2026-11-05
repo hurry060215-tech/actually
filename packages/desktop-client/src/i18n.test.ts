@@ -7,6 +7,7 @@ vi.mock('i18next', () => {
     use: vi.fn().mockReturnThis(),
     init: vi.fn().mockResolvedValue(undefined),
     changeLanguage: vi.fn(),
+    on: vi.fn(),
   };
   return {
     default: i18nMock,
@@ -18,12 +19,26 @@ vi.mock('./languages', () => ({
     '/locale/en.json': vi.fn(),
     '/locale/uk.json': vi.fn(),
     '/locale/pt-BR.json': vi.fn(),
+    '/locale/zh-Hans.json': vi.fn(),
   },
 }));
 
 vi.hoisted(vi.resetModules);
 
 describe('setI18NextLanguage', () => {
+  test('defaults to Simplified Chinese before preferences exist', () => {
+    vi.stubGlobal('navigator', { language: 'en-US' });
+    setI18NextLanguage(null);
+    expect(vi.mocked(i18n).changeLanguage).toHaveBeenCalledWith('zh-Hans');
+  });
+
+  test.each(['zh', 'zh-CN', 'zh-SG', 'zh-Hans-CN', 'ZH-cn'])(
+    'resolves %s to the bundled Simplified Chinese catalog',
+    language => {
+      setI18NextLanguage(language);
+      expect(vi.mocked(i18n).changeLanguage).toHaveBeenCalledWith('zh-Hans');
+    },
+  );
   beforeEach(async () => {
     vi.clearAllMocks();
   });

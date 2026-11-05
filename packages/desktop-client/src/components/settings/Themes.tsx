@@ -10,6 +10,7 @@ import { spacing } from '@actual-app/components/tokens';
 import { View } from '@actual-app/components/view';
 import type { DarkTheme, Theme } from '@actual-app/core/types/prefs';
 import { css } from '@emotion/css';
+import type { TFunction } from 'i18next';
 
 import { useGlobalPref } from '#hooks/useGlobalPref';
 import {
@@ -31,6 +32,21 @@ import { ThemeInstaller } from './ThemeInstaller';
 const INSTALL_NEW_VALUE = '__install_new__';
 const INSTALL_CUSTOM_LIGHT = '__install_custom_light__';
 const INSTALL_CUSTOM_DARK = '__install_custom_dark__';
+
+function translateThemeName(name: string, t: TFunction) {
+  switch (name) {
+    case 'Light':
+      return t('Light');
+    case 'Dark':
+      return t('Dark');
+    case 'Midnight':
+      return t('Midnight');
+    case 'System default':
+      return t('System default');
+    default:
+      return name;
+  }
+}
 
 type InstallerState = {
   slot: 'light' | 'dark';
@@ -62,7 +78,9 @@ export function ThemeSettings() {
 
   const buildOptions = useCallback(() => {
     const options: Array<readonly [string, string] | typeof Menu.line> = [
-      ...themeOptions,
+      ...themeOptions.map(
+        ([value, name]) => [value, translateThemeName(name, t)] as const,
+      ),
     ];
 
     if (theme !== 'auto' && installedCustomLightTheme) {
@@ -94,7 +112,9 @@ export function ThemeSettings() {
 
   const buildDarkOptions = useCallback(() => {
     const options: Array<readonly [string, string] | typeof Menu.line> = [
-      ...darkThemeOptions,
+      ...darkThemeOptions.map(
+        ([value, name]) => [value, translateThemeName(name, t)] as const,
+      ),
     ];
     if (installedCustomDarkTheme) {
       options.push([

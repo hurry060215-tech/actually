@@ -116,3 +116,6 @@ storybook-static
 .actualrc.yaml
 .actualrc.yml
 actual.config.js
+
+# Local translation authoring and verification scratch files
+.local/

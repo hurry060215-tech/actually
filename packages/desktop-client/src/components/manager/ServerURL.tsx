@@ -25,9 +25,11 @@ export function ServerURL() {
     >
       <Text>
         {url ? (
-          <Trans>
-            Using server: <strong>{url}</strong>
-          </Trans>
+          <Trans
+            defaults="Using server: <0>{{url}}</0>"
+            values={{ url }}
+            components={[<strong key="url" />]}
+          />
         ) : (
           <Trans>Using this device only</Trans>
         )}

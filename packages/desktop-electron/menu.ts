@@ -4,10 +4,10 @@ import type { BrowserWindow, MenuItemConstructorOptions } from 'electron';
 export function getMenu() {
   const template: MenuItemConstructorOptions[] = [
     {
-      label: 'File', // Kept purely for the keyboard shortcuts in Electron. Some shortcuts only work if they are in a menu (toggle devtools cannot be triggered in pure js).
+      label: '文件', // Kept purely for the keyboard shortcuts in Electron. Some shortcuts only work if they are in a menu (toggle devtools cannot be triggered in pure js).
       submenu: [
         {
-          label: 'Exit',
+          label: '退出',
           click(_item, focusedWindow) {
             if (focusedWindow) {
               const browserWindow = focusedWindow as BrowserWindow;
@@ -18,10 +18,10 @@ export function getMenu() {
       ],
     },
     {
-      label: 'View',
+      label: '视图',
       submenu: [
         {
-          label: 'Reload',
+          label: '重新加载',
           accelerator: 'CmdOrCtrl+R',
           click(_item, focusedWindow) {
             if (focusedWindow) {
@@ -31,7 +31,7 @@ export function getMenu() {
           },
         },
         {
-          label: 'Toggle Developer Tools',
+          label: '切换开发者工具',
           accelerator:
             process.platform === 'darwin' ? 'Alt+Command+I' : 'Ctrl+Shift+I',
           click(_item, focusedWindow) {
@@ -46,26 +46,30 @@ export function getMenu() {
         },
         {
           role: 'resetZoom',
+          label: '实际大小',
         },
         {
           role: 'zoomIn',
+          label: '放大',
         },
         {
           role: 'zoomOut',
+          label: '缩小',
         },
         {
           type: 'separator',
         },
         {
           role: 'togglefullscreen',
+          label: '切换全屏',
         },
       ],
     },
     {
-      label: 'Edit',
+      label: '编辑',
       submenu: [
         {
-          label: 'Undo',
+          label: '撤销',
           enabled: false,
           accelerator: 'CmdOrCtrl+Z',
           click: function (_menuItem, focusedWin) {
@@ -78,7 +82,7 @@ export function getMenu() {
           },
         },
         {
-          label: 'Redo',
+          label: '重做',
           enabled: false,
           accelerator: 'Shift+CmdOrCtrl+Z',
           click: function (_menuItem, focusedWin) {
@@ -95,29 +99,37 @@ export function getMenu() {
         },
         {
           role: 'cut',
+          label: '剪切',
         },
         {
           role: 'copy',
+          label: '复制',
         },
         {
           role: 'paste',
+          label: '粘贴',
         },
         {
           role: 'pasteAndMatchStyle',
+          label: '粘贴并匹配样式',
         },
         {
           role: 'delete',
+          label: '删除',
         },
         {
           role: 'selectAll',
+          label: '全选',
         },
       ],
     },
     {
       role: 'window',
+      label: '窗口',
       submenu: [
         {
           role: 'minimize',
+          label: '最小化',
         },
       ],
     },
@@ -131,18 +143,22 @@ export function getMenu() {
       submenu: [
         {
           role: 'hide',
+          label: '隐藏 Actual',
         },
         {
           role: 'hideOthers',
+          label: '隐藏其他应用',
         },
         {
           role: 'unhide',
+          label: '显示全部',
         },
         {
           type: 'separator',
         },
         {
           role: 'quit',
+          label: '退出 Actual',
         },
       ],
     });
@@ -151,24 +167,24 @@ export function getMenu() {
     const windowIdx = template.findIndex(t => t.role === 'window');
     template[windowIdx].submenu = [
       {
-        label: 'Close',
+        label: '关闭',
         accelerator: 'CmdOrCtrl+W',
         role: 'close',
       },
       {
-        label: 'Minimize',
+        label: '最小化',
         accelerator: 'CmdOrCtrl+M',
         role: 'minimize',
       },
       {
-        label: 'Zoom',
+        label: '缩放',
         role: 'zoom',
       },
       {
         type: 'separator',
       },
       {
-        label: 'Bring All to Front',
+        label: '全部置于前面',
         role: 'front',
       },
     ];

@@ -1,14 +1,14 @@
 import { initReactI18next } from 'react-i18next';
 
-import * as Platform from '@actual-app/core/shared/platform';
 import i18n from 'i18next';
 import resourcesToBackend from 'i18next-resources-to-backend';
 
 import { languages } from './languages';
+import simplifiedChinese from './locales/zh-Hans.json';
 
-export const availableLanguages = Platform.isPlaywright
-  ? []
-  : Object.keys(languages).map(path => path.split('/')[2].split('.')[0]);
+export const availableLanguages = Object.keys(languages).map(
+  path => path.split('/')[2].split('.')[0],
+);
 
 const isLanguageAvailable = (language: string) =>
   Object.hasOwn(languages, `/locale/${language}.json`);
@@ -24,7 +24,9 @@ void i18n
   .use(initReactI18next)
   .use(resourcesToBackend(loadLanguage))
   .init({
-    lng: 'en',
+    lng: 'zh-Hans',
+    resources: { 'zh-Hans': { translation: simplifiedChinese } },
+    partialBundledLanguages: true,
 
     // allow keys to be phrases having `:`, `.`
     nsSeparator: false,
@@ -44,6 +46,11 @@ const resolveLanguage = (language: string) => {
   if (language === 'en') return 'en';
 
   if (isLanguageAvailable(language)) return language;
+
+  // Windows and browsers use regional tags, while Weblate uses script tags.
+  if (/^zh(?:-(?:cn|sg|hans)(?:-.*)?)?$/i.test(language)) {
+    return 'zh-Hans';
+  }
 
   const lowercaseLanguage = language.toLowerCase();
   if (lowercaseLanguage !== language) {
@@ -66,7 +73,8 @@ export const setI18NextLanguage = (language: string | null) => {
   const defaultLanguages = Array.isArray(navigator.languages)
     ? navigator.languages
     : [navigator.language || 'en'];
-  const languagesToTry = language ? [language] : defaultLanguages;
+  const languagesToTry =
+    language === null ? ['zh-Hans'] : language ? [language] : defaultLanguages;
 
   let resolved: string | undefined;
 
@@ -91,3 +99,7 @@ export const setI18NextLanguage = (language: string | null) => {
 
   void i18n.changeLanguage(resolved);
 };
+
+i18n.on('languageChanged', language => {
+  document.documentElement.lang = language;
+});

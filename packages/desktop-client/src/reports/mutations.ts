@@ -19,6 +19,7 @@ import { addNotification } from '#notifications/notificationsSlice';
 import { useDispatch } from '#redux';
 import type { AppDispatch } from '#redux/store';
 
+import { localizeDefaultDashboard } from './localizeDefaultDashboard';
 import { dashboardQueries, reportQueries } from './queries';
 
 const sendThrow: typeof send = async (name, args) => {
@@ -280,7 +281,9 @@ export function useResetDashboardPageMutation() {
 
   return useMutation({
     mutationFn: async ({ id }: ResetDashboardPageMutationPayload) => {
-      return await sendThrow('dashboard-reset', id);
+      const result = await sendThrow('dashboard-reset', id);
+      await localizeDefaultDashboard(id);
+      return result;
     },
     onSuccess: () => invalidateDashboardQueries(queryClient),
     onError: error => {

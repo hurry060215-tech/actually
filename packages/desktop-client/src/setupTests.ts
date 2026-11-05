@@ -1,9 +1,17 @@
 import '@testing-library/jest-dom/vitest';
 import type { ReactNode } from 'react';
 
+import i18n from 'i18next';
+
 import { resetTestProviders } from './mocks';
 
 global.IS_TESTING = true;
+
+// Upstream component assertions use English. Keep their locale explicit while
+// the shipped application defaults to Chinese; localization tests select zh-Hans.
+beforeEach(async () => {
+  await i18n.changeLanguage('en');
+});
 global.Actual = {} as typeof global.Actual;
 
 // jsdom doesn't implement ResizeObserver. Components that only use it to

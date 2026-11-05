@@ -49,7 +49,7 @@ export const test = base.extend<ElectronFixtures & ElectronOptions>({
     }
 
     const app = await _electron.launch({
-      args: ['.'],
+      args: ['.', `--user-data-dir=${path.resolve(testDataDir, 'chromium')}`],
       env: {
         ...process.env,
         ACTUAL_DOCUMENT_DIR: documentDir,

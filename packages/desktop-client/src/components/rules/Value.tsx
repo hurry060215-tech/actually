@@ -143,7 +143,7 @@ export function Value<T>({
 
   if (Array.isArray(value)) {
     if (value.length === 0) {
-      return <ValueText style={valueStyle}>(empty)</ValueText>;
+      return <ValueText style={valueStyle}>{t('(empty)')}</ValueText>;
     } else if (value.length === 1) {
       return (
         <Text>

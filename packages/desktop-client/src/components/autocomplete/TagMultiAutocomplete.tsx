@@ -1,4 +1,5 @@
 import type { ComponentProps } from 'react';
+import { useTranslation } from 'react-i18next';
 
 import { Button } from '@actual-app/components/button';
 import { SvgRemove } from '@actual-app/components/icons/v2';
@@ -27,6 +28,7 @@ type TagMultiAutocompleteProps = {
 );
 
 export function TagMultiAutocomplete(props: TagMultiAutocompleteProps) {
+  const { t } = useTranslation();
   const { tags, inputProps, containerProps, embedded, closeOnBlur } = props;
   const { data: loadedTags = [] } = useTags();
   const availableTags = tags ?? loadedTags;
@@ -63,7 +65,7 @@ export function TagMultiAutocomplete(props: TagMultiAutocompleteProps) {
         />
       )}
       renderMultiItem={TagMultiItem}
-      inputProps={{ placeholder: 'Choose tags', ...inputProps }}
+      inputProps={{ placeholder: t('Choose tags'), ...inputProps }}
     />
   );
 }
